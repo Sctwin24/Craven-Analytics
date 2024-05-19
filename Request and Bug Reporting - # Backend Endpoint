@@ -1,0 +1,22 @@
+# Backend Endpoint
+#Flask Endpoint for Submitting Requests
+from flask import Flask, request, jsonify
+from models import db, Request
+
+app = Flask(__name__)
+
+@app.route('/submit_request', methods=['POST'])
+def submit_request():
+    data = request.json
+    new_request = Request(
+        title=data['title'],
+        description=data['description'],
+        type=data['type'],
+        priority=data['priority']
+    )
+    db.session.add(new_request)
+    db.session.commit()
+    return jsonify({"message": "Request submitted successfully"}), 200
+
+if __name__ == '__main__':
+    app.run()
