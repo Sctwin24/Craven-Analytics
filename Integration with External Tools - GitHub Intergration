@@ -1,0 +1,12 @@
+# Python Class for GitHub Integration
+import requests
+
+class GitHubIntegration:
+    def __init__(self, token):
+        self.headers = {'Authorization': f'token {token}'}
+
+    def create_repo(self, repo_name):
+        url = 'https://api.github.com/user/repos'
+        data = {"name": repo_name}
+        response = requests.post(url, json=data, headers=self.headers)
+        return response.json()
