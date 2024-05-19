@@ -1,0 +1,27 @@
+// React Component for Gantt Chart
+import React from 'react';
+import Highcharts from 'highcharts';
+import HighchartsGantt from 'highcharts/modules/gantt';
+HighchartsGantt(Highcharts);
+
+const GanttChart = ({ tasks }) => {
+  const options = {
+    series: [{
+      name: 'Project Tasks',
+      data: tasks.map(task => ({
+        id: task.id,
+        name: task.title,
+        start: new Date(task.startDate).getTime(),
+        end: new Date(task.endDate).getTime()
+      }))
+    }]
+  };
+
+  return (
+    <div id="gantt-chart">
+      <HighchartsReact highcharts={Highcharts} constructorType={'ganttChart'} options={options} />
+    </div>
+  );
+};
+
+export default GanttChart;
