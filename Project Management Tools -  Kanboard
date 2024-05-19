@@ -1,0 +1,31 @@
+// React Component for Kanban Board
+import React from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+const KanbanBoard = ({ tasks, onDragEnd }) => {
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      {['To Do', 'In Progress', 'Done'].map(status => (
+        <Droppable droppableId={status} key={status}>
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              <h3>{status}</h3>
+              {tasks.filter(task => task.status === status).map((task, index) => (
+                <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                  {(provided) => (
+                    <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                      <p>{task.title}</p>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      ))}
+    </DragDropContext>
+  );
+};
+
+export default KanbanBoard;
