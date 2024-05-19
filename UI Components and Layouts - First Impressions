@@ -1,0 +1,19 @@
+<!-- Splash Screen HTML -->
+<div class="splash-screen">
+  <img src="logo.png" alt="Company Logo" class="logo">
+  <div class="loading-indicator"></div>
+</div>
+
+<!-- Login Screen HTML -->
+<div class="login-container">
+  <form class="login-form">
+    <h2>Welcome to SDaaS Platform</h2>
+    <input type="text" placeholder="Username" required>
+    <input type="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+    <div class="sso-options">
+      <button>Login with Google</button>
+      <button>Login with Microsoft</button>
+    </div>
+  </form>
+</div>
