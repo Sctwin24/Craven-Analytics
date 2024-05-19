@@ -1,0 +1,101 @@
+// App.js - React Frontend
+
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import io from 'socket.io-client';
+import './App.css';
+
+const socket = io();
+
+const Dashboard = () => {
+  return (
+    <div className="dashboard">
+      <h2>Dashboard</h2>
+      <div className="cards">
+        <div className="card">
+          <h3>Project Overview</h3>
+          <p>Summary of project status and key metrics.</p>
+        </div>
+        <div className="card">
+          <h3>Recent Activity</h3>
+          <ul>
+            <li>Feature X completed</li>
+            <li>Bug Y resolved</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Login = ({ setToken }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+    const data = await response.json();
+    if (data.access_token) {
+      setToken(data.access_token);
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Welcome to SDaaS Platform</h2>
+        <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
+};
+
+const App = () => {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    socket.on('message', (msg) => {
+      console.log('Message received: ' + msg);
+    });
+
+    return () => {
+      socket.off('message');
+    };
+  }, []);
+
+  if (!token) {
+    return <Login setToken={setToken} />;
+  }
+
+  return (
+    <Router>
+      <div className="app">
+        <nav className="navbar">
+          <div className="navbar-logo">
+            <img src="logo.png" alt="Company Logo" />
+          </div>
+          <ul className="navbar-links">
+            <li><Link to="/dashboard">Dashboard</Link></li>
+            <li><Link to="/projects">Projects</Link></li>
+            <li><Link to="/tasks">Tasks</Link></li>
+            <li><Link to="/analytics">Analytics</Link></li>
+            <li><Link to="/settings">Settings</Link></li>
+          </ul>
+        </nav>
+        <Switch>
+          <Route path="/dashboard" component={Dashboard} />
+          {/* Additional routes for Projects, Tasks, Analytics, Settings */}
+        </Switch>
+      </div>
+    </Router>
+  );
+};
+
+export default App;
