@@ -1,0 +1,13 @@
+<!-- Card Layout HTML -->
+<div class="card">
+  <h3>Project Overview</h3>
+  <p>Summary of project status and key metrics.</p>
+</div>
+
+<div class="card">
+  <h3>Recent Activity</h3>
+  <ul>
+    <li>Feature X completed</li>
+    <li>Bug Y resolved</li>
+  </ul>
+</div>
