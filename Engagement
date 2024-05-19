@@ -1,0 +1,10 @@
+<!-- Notification HTML -->
+<div class="notification">
+  <p>You have a new message from the project team.</p>
+  <button aria-label="Close Notification">X</button>
+</div>
+
+<!-- Interactive Chart HTML -->
+<div id="chart-container">
+  <canvas id="user-activity-chart"></canvas>
+</div>
