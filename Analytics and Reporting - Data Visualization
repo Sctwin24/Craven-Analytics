@@ -1,0 +1,25 @@
+// React Component for Data Visualization
+import React from 'react';
+import { Line } from 'react-chartjs-2';
+
+const AnalyticsChart = ({ data }) => {
+  const chartData = {
+    labels: data.map(item => item.date),
+    datasets: [
+      {
+        label: 'User Activity',
+        data: data.map(item => item.activity),
+        borderColor: 'rgba(75,192,192,1)',
+        fill: false
+      }
+    ]
+  };
+
+  return (
+    <div>
+      <Line data={chartData} />
+    </div>
+  );
+};
+
+export default AnalyticsChart;
